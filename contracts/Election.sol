@@ -33,11 +33,15 @@ contract Election is Ownable{
         candidateList = new address[](candidatesNum);
         totalEarnings = 0;
 
-        token = new ElecToken(1000);
+        token = new ElecToken(1000, address(this));
     }
 
     function getTokenAddress() public view returns (address) {
         return address(token);
+    }
+
+    function getThisAddress() public view returns (address) {
+        return address(this);
     }
 
     function getTime() public view returns (uint) {
@@ -56,7 +60,9 @@ contract Election is Ownable{
         token.transfer(voter, quantity);
     }
 
-    function vote(address candidate, uint32 quantity) public onlyOwner electionHasEnded {
+    function vote(address candidate, uint32 quantity) public electionHasEnded {
+        require(voteCount[candidate] != 0, "This address is not a candidate");
+        
         token.transferFrom(msg.sender, address(this), quantity); //transferFrom will fail if voter does not have enough coins
         
         voteCount[candidate] += quantity;
@@ -72,7 +78,7 @@ contract Election is Ownable{
     }
 
     function hasEnded() public view returns (bool) {
-        return (getEndTime() > endTime);
+        return (block.timestamp > endTime);
     }
 
     function enterRace() public payable electionHasEnded{
