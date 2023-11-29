@@ -4,6 +4,9 @@
 // You can also run a script with `npx hardhat run <script>`. If you do that, Hardhat
 // will compile your contracts, add the Hardhat Runtime Environment's members to the
 // global scope, and execute the script.
+
+//deployed at: 0x985BAB0AD7b0918C94f430bbA40aE71C0059Bd50
+
 const hre = require("hardhat");
 
 async function main() {
