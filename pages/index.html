@@ -40,6 +40,12 @@
 
         section {
             padding: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .left-section, .right-section {
+            flex: 1;
         }
 
         button {
@@ -55,7 +61,7 @@
 
     <header>
         <h1>SecElect</h1>
-        <h2>A Blockhain Alternative To Hosting Secure Elections</h2>
+        <h2>A Blockchain Alternative To Hosting Secure Elections</h2>
     </header>
 
     <nav>
@@ -63,9 +69,19 @@
     </nav>
 
     <section>
-        <h2>Welcome to Page 1</h2>
-        <button>Button 1</button>
-        <button>Button 2</button>
+        <div class="left-section">
+            <h2>Run in an Election</h2>
+            <h3>Some Elections May Have Entrance Fees</h3>
+            <input type="text" placeholder="Confirm Your Address">
+            <button>Run in Election</button>
+        </div>
+
+        <div class="right-section">
+            <h2>Vote in an Election</h2>
+            <h3>You Have a Total of 10 Votes</h3>
+            <input type="text" placeholder="Enter Address">
+            <button>Cast Your Vote</button>
+        </div>
     </section>
 
 </body>
