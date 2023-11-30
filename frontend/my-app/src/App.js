@@ -83,9 +83,21 @@ function App() {
     
   }
 
-    
   const deploy = () => {
     StartElection();
+  }
+
+  const winner = async () => {
+    try {
+      var button = document.getElementById("winner-label");
+      var section = button.parentElement;
+      
+      var winnerText = document.createElement("p");
+      winnerText.innerHTML = await electionContract.winner();
+      
+      section.replaceChild(winnerText, button);
+    } catch {
+    }
   }
 
   const updateHeading = () => {
@@ -158,6 +170,11 @@ function App() {
         <input type="text" id="candidate" placeholder="Enter Address"/>
         <input type="text" id ="amount" placeholder="Enter Number of Votes"/>
         <button onClick={() => vote()}>Cast Your Vote</button>
+    </section>
+
+    <section>
+        <h2>Reveal Winner</h2>
+        <button id="winner-label" onClick={() => winner()}>Reveal Election Winner</button>
     </section>
     </div>
   );
