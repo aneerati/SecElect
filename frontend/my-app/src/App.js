@@ -51,7 +51,12 @@ function App() {
   }
 
   async function StartElection() {
-    const contract = await factory.deploy(address, endingTime, fee, candidatesNum);
+    var endDate = document.getElementById('endDate').value;
+    var fee = document.getElementById('fee').value;
+    var candidatesNum = document.getElementById('candidatesNum').value;
+    var address = document.getElementById('address').value;
+    
+    const contract = await factory.deploy(address, endDate, fee, candidatesNum);
     
     await contract.waitForDeployment()
     setSmartContract(contract);
@@ -65,6 +70,29 @@ function App() {
     StartElection();
   }
 
+  const updateHeading = () => {
+    var endDate = document.getElementById('endDate').value;
+    var fee = document.getElementById('fee').value;
+    var candidatesNum = document.getElementById('candidatesNum').value;
+    var resultHeading = document.getElementById('resultHeading');
+    var errorMessages = document.getElementById('errorMessages');
+    var address = document.getElementById('address').value;
+
+    // Clear previous error messages
+    errorMessages.textContent = '';
+
+    // Validate Unix timestamp input
+    if (!/^\d+$/.test(inputDate)) {
+        errorMessages.textContent = 'Please enter a valid Unix timestamp.';
+        return;
+    }
+
+    // Convert Unix timestamp to human-readable date and time
+    var date = new Date(inputDate * 1000);
+
+    resultHeading.textContent = 'Converted Date and Time: ' + date.toLocaleString();
+  }
+
   return (
     <div className="App">
 
@@ -76,21 +104,21 @@ function App() {
     <section>
         <h2>Create Your Election Entirely for Free</h2>
         <div class="user-input">
-            <label for="inputDate">Enter Election End Date (Unix Timestamp):</label>
-            <input type="text" id="inputDate" placeholder="Enter Unix Timestamp" required/>
+            <label for="endDate">Enter Election End Date (Unix Timestamp):</label>
+            <input type="text" id="endDate" placeholder="Enter Unix Timestamp" required/>
             <button onclick="convertUnixTimestamp()">Convert to Date and Time</button>
         </div>
         <div class="user-input">
-            <label for="input2">Enter the Entrance Fee for Candidates:</label>
-            <input type="number" id="input2" required/>
+            <label for="fee">Enter the Entrance Fee for Candidates:</label>
+            <input type="number" id="fee" required/>
         </div>
         <div class="user-input">
-            <label for="input3">Enter the Max Number of Candidates:</label>
-            <input type="number" id="input3" required/>
+            <label for="candidatesNum">Enter the Max Number of Candidates:</label>
+            <input type="number" id="candidatesNum" required/>
         </div>
         <div class="user-input">
-            <label for="inputAddress">Enter Your Public Address:</label>
-            <input type="text" id="inputAddress" placeholder="Your Public Address" required/>
+            <label for="address">Enter Your Public Address:</label>
+            <input type="text" id="address" placeholder="Your Public Address" required/>
         </div>
         <button onclick="updateHeading()">Create Election</button>
         <h3 id="resultHeading"></h3>
