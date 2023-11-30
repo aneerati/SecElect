@@ -69,17 +69,19 @@ function App() {
     var address = document.getElementById('address').value;
 
     console.log(endDate, fee, candidatesNum, address);
-    try {
+   //try {
       const contract = await factory.deploy(address, endDate, fee, candidatesNum);
       
       await contract.waitForDeployment()
       setSmartContract(contract);
 
+      setEntranceFee(fee);
+
       console.log(contract.target);
       console.log(contract.deployTransaction);
-    } catch {
+    //} catch {
 
-    }
+    //}
     
   }
 
