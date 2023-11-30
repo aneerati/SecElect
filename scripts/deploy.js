@@ -6,6 +6,7 @@
 // global scope, and execute the script.
 
 //deployed at: 0x985BAB0AD7b0918C94f430bbA40aE71C0059Bd50
+//latest version at: 0xD9aFb0C9a9CEa2E76ADC3D79AA1AD1363717A4BD
 
 const hre = require("hardhat");
 
