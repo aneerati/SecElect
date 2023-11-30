@@ -38,8 +38,8 @@ function App() {
   }
 
   const vote = () => {
-      var candidate = document.getElementById('endDate').value;
-      var amount = document.getElementById('endDate').value;
+      var candidate = document.getElementById('candidate').value;
+      var amount = document.getElementById('amount').value;
 
       electionContract.vote.populateTransaction(candidate, amount).then((result) => {
         try {
