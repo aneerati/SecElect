@@ -4,6 +4,7 @@ import {useState} from 'React';
 import { getWalletObjs } from './Wallet';
 import { ContractFactory } from 'ethers';
 
+
 function App() {
 
   const [provider, setProvider] = useState(null);
@@ -11,6 +12,8 @@ function App() {
   const [connected, setConnected] = useState(false)
   const [factory, setFactory] = useState(null);
   const [electionContract, setSmartContract] = useState(null);
+
+  const [entranceFee, setEntranceFee] = useState(10);
 
   const setUpWallet = () => {
       getWalletObjs().then((result) => {
@@ -39,8 +42,10 @@ function App() {
       //electionContract.
   }
 
-  const run = (candidate, ) => {
-      electionContract[enterRace].populateTransaction(value).then((result) => {
+  const run = (candidate, value) => {
+      electionContract.enterRace.populateTransaction({
+        value: entranceFee
+      }).then((result) => {
         provider.sendTransaction(result);
       });
   }

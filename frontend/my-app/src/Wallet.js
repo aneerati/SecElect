@@ -1,4 +1,5 @@
 import electionJson from "../../../ElectionABI.json";
+import { ethers } from "ethers";
 
 export async function getWalletObjs() {
 
@@ -9,7 +10,7 @@ export async function getWalletObjs() {
         
         
         return {
-            provider, signer, contractFactory, smartContract
+            provider, signer, contractFactory
         }
 
     } catch {
