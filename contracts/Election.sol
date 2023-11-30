@@ -95,4 +95,18 @@ contract Election is Ownable{
         payable(owner()).transfer(totalEarnings);
     }
 
+    function winner() public view electionHasEnded returns (address) {
+
+        //simple find Maximum algorithm
+        address winnerAddress = address(0);
+        uint maxVotes = 0; //0 is the lowest amount of votes possible
+        for (uint i = 0; i < candidateList.length; i++) {
+            if (voteCount[candidateList[i]] > maxVotes) {
+                maxVotes = voteCount[candidateList[i]];
+                winnerAddress = candidateList[i];
+            }
+        }
+
+        return winnerAddress;
+    }
 }
