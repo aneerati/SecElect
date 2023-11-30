@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import {useState} from 'React';
+import { getWalletObjs } from './Wallet';
 import { ContractFactory } from 'ethers';
 
 function App() {
@@ -45,7 +46,6 @@ function App() {
   }
 
   async function StartElection() {
-    const factory = new ContractFactory(contractAbi, contractByteCode);
     const contract = await factory.deploy(address, endingTime, fee, candidatesNum);
     
     await contract.waitForDeployment()
