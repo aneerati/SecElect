@@ -3,6 +3,8 @@ import './App.css';
 import {useState} from 'react';
 import { getWalletObjs } from './Wallet';
 import { ContractFactory } from 'ethers';
+import tokenJson from "./ElecToken.json";
+import { Contract } from 'hardhat/internal/hardhat-network/stack-traces/model';
 
 function App() {
 
@@ -11,6 +13,8 @@ function App() {
   const [connected, setConnected] = useState(false)
   const [factory, setFactory] = useState(null);
   const [electionContract, setSmartContract] = useState(null);
+
+  const [tokenContract, setTokenContract] = useState(null);
 
   const [entranceFee, setEntranceFee] = useState(10);
 
@@ -21,6 +25,8 @@ function App() {
           setSigner(result.signer)
           setFactory(result.contractFactory)
           //setSmartContract(result.smartContract)
+
+          
 
           if (result.signer == null) {
               
@@ -62,6 +68,24 @@ function App() {
       });
   }
 
+  function allowance() {
+
+    var amount
+
+    tokenContract.approve(electionContract.address, amount).then((result) => {
+      signer.sendTransaction(result)
+    });
+  }
+
+  function distributeToken() {
+    var address
+    var amount
+
+    electionContract.distributeToken(address, candidate).then((result) => {
+      signer.sendTransaction(result)
+    });
+  }
+
   async function StartElection() {
     var endDate = document.getElementById('endDate').value;
     var fee = document.getElementById('fee').value;
@@ -74,6 +98,14 @@ function App() {
       
       await contract.waitForDeployment()
       setSmartContract(contract);
+
+      let tokenAddress = await electionContract.getTokenAddress();
+
+      let tokenContractFactory = new ContractFactory(tokenJson.abi, tokenJson.bytecode);
+
+      let tokenContract = tokenContractFactory.attach(tokenAddress);
+
+      setTokenContract(tokenContract)
 
       setEntranceFee(fee);
 
