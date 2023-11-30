@@ -72,18 +72,32 @@
         <div class="left-section">
             <h2>Run in an Election</h2>
             <h3>Some Elections May Have Entrance Fees</h3>
-            <input type="text" placeholder="Confirm Your Address">
+            <input type="text" id="address" placeholder="Confirm Your Address">
             <button>Run in Election</button>
         </div>
 
         <div class="right-section">
             <h2>Vote in an Election</h2>
             <h3>You Have a Total of 10 Votes</h3>
-            <input type="text" placeholder="Enter Address">
-            <input type="text" placeholder="Enter Number of Votes">
+            <input type="text" id = "candidate_address" placeholder="Enter Address">
+            <input type="text" id="vote_amount" placeholder="Enter Number of Votes">
             <button>Cast Your Vote</button>
         </div>
     </section>
+
+    <script>
+        function runInElection() {
+            var address = document.getElementById('address').value;
+            
+        }
+
+        function vote() {
+            var candidate_address = document.getElementById('candidate_address').value;
+            var vote_amount = document.getElementById('vote_amount').value;
+
+            
+        }
+    </script>
 
 </body>
 </html>
