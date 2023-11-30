@@ -61,7 +61,10 @@ contract Election is Ownable{
     }
 
     function vote(address candidate, uint32 quantity) public electionHasEnded {
+        //if voteCount[address] is 0, then the the address is not a candidate
+        //if it isn't 0, it is
         require(voteCount[candidate] != 0, "This address is not a candidate");
+        require(voteCount[msg.sender] == 0, "Candidates cannot vote"); 
         
         //transfer quantity of tokens from the msg.sender to this contract
         //requires that msg.sender gave this contract an allowance beforehand
