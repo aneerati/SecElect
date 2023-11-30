@@ -69,14 +69,6 @@ contract Election is Ownable{
 
     }
 
-    // reset election instance
-    function resetElection(uint256 endingTime, uint fee, uint candidatesNum) public electionHasEnded {
-        endTime = endingTime;
-        entranceFee = fee;
-        candidateList = new address[](candidatesNum);
-        totalEarnings = 0;
-    }
-
     function hasEnded() public view returns (bool) {
         return (block.timestamp > endTime);
     }
