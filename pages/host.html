@@ -76,13 +76,14 @@
     <section>
         <h2>Create Your Election Entirely for Free</h2>
         <div class="user-input">
-            <label for="inputDate">Select Election End Date:</label>
-            <input type="date" id="inputDate" required>
+            <label for="inputDate">Enter Election End Date (Unix Timestamp):</label>
+            <input type="text" id="inputDate" placeholder="Enter Unix Timestamp" required>
+            <button onclick="convertUnixTimestamp()">Convert to Date and Time</button>
         </div>
-        <div class="user-input">
+        <!-- <div class="user-input">
             <label for="inputTime">Select Election End Time:</label>
             <input type="time" id="inputTime" required>
-        </div>
+        </div> -->
         <div class="user-input">
             <label for="input2">Enter the Entrance Fee for Candidates:</label>
             <input type="number" id="input2" required>
@@ -91,15 +92,37 @@
             <label for="input3">Enter the Max Number of Candidates:</label>
             <input type="number" id="input3" required>
         </div>
+        <div class="user-input">
+            <label for="inputAddress">Enter Your Public Address:</label>
+            <input type="text" id="inputAddress" placeholder="Your Public Address" required>
+        </div>
         <button onclick="updateHeading()">Create Election</button>
         <h3 id="resultHeading"></h3>
         <p id="errorMessages" class="error"></p>
     </section>
 
     <script>
+        function convertUnixTimestamp() {
+            var inputDate = document.getElementById('inputDate').value;
+            var resultHeading = document.getElementById('resultHeading');
+            var errorMessages = document.getElementById('errorMessages');
+
+            // Clear previous error messages
+            errorMessages.textContent = '';
+
+            // Validate Unix timestamp input
+            if (!/^\d+$/.test(inputDate)) {
+                errorMessages.textContent = 'Please enter a valid Unix timestamp.';
+                return;
+            }
+
+            // Convert Unix timestamp to human-readable date and time
+            var date = new Date(inputDate * 1000);
+            resultHeading.textContent = 'Converted Date and Time: ' + date.toLocaleString();
+        }
+
         function updateHeading() {
             var inputDate = document.getElementById('inputDate').value;
-            var inputTime = document.getElementById('inputTime').value;
             var input2 = document.getElementById('input2').value;
             var input3 = document.getElementById('input3').value;
             var resultHeading = document.getElementById('resultHeading');
@@ -108,28 +131,16 @@
             // Clear previous error messages
             errorMessages.textContent = '';
 
-            // Validate date and time inputs
-            var selectedDateTime = new Date(inputDate + ' ' + inputTime);
-            var currentDateTime = new Date();
-
-            if (!inputDate || !inputTime || selectedDateTime <= currentDateTime) {
-                errorMessages.textContent += 'Please choose a future date and time. ';
-            }
-
-            // Validate number inputs
-            if (isNaN(input2) || isNaN(input3)) {
-                errorMessages.textContent += 'Entrance Fee and Max Number of Candidates must be valid numbers.';
-            }
-
-            // If there are errors, do not proceed
-            if (errorMessages.textContent !== '') {
+            // Validate Unix timestamp input
+            if (!/^\d+$/.test(inputDate)) {
+                errorMessages.textContent = 'Please enter a valid Unix timestamp.';
                 return;
             }
 
-            // Convert selected date and time to Unix timestamp
-            var unixTimestamp = selectedDateTime.getTime() / 1000;
+            // Convert Unix timestamp to human-readable date and time
+            var date = new Date(inputDate * 1000);
 
-            resultHeading.textContent = 'Unix Timestamp: ' + unixTimestamp + ', Input 2: ' + input2 + ', Input 3: ' + input3;
+            resultHeading.textContent = 'Converted Date and Time: ' + date.toLocaleString() + ', Input 2: ' + input2 + ', Input 3: ' + input3;
         }
     </script>
 
