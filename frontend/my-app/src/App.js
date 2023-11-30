@@ -46,7 +46,12 @@ function App() {
   }
 
   async function StartElection() {
-    const contract = await factory.deploy(address, endingTime, fee, candidatesNum);
+    var endDate = document.getElementById('endDate').value;
+    var fee = document.getElementById('fee').value;
+    var candidatesNum = document.getElementById('candidatesNum').value;
+    var address = document.getElementById('address').value;
+    
+    const contract = await factory.deploy(address, endDate, fee, candidatesNum);
     
     await contract.waitForDeployment()
     setSmartContract(contract);
@@ -61,12 +66,12 @@ function App() {
   }
 
   const updateHeading = () => {
-    var inputDate = document.getElementById('inputDate').value;
-    var input2 = document.getElementById('input2').value;
-    var input3 = document.getElementById('input3').value;
+    var endDate = document.getElementById('endDate').value;
+    var fee = document.getElementById('fee').value;
+    var candidatesNum = document.getElementById('candidatesNum').value;
     var resultHeading = document.getElementById('resultHeading');
     var errorMessages = document.getElementById('errorMessages');
-    var hostAddress = document.getElementById('inputAddress').value;
+    var address = document.getElementById('address').value;
 
     // Clear previous error messages
     errorMessages.textContent = '';
