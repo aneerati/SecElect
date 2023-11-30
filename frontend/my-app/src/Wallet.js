@@ -6,6 +6,7 @@ export async function getWalletObjs() {
     try {
         let provider = new ethers.BrowserProvider(window.ethereum)
         let signer = await provider.getSigner()
+        console.log(signer)
         let contractFactory = new ethers.ContractFactory(electionJson.abi, electionJson.bytecode, signer);
         
         

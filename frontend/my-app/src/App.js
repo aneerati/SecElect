@@ -4,7 +4,6 @@ import {useState} from 'react';
 import { getWalletObjs } from './Wallet';
 import { ContractFactory } from 'ethers';
 import tokenJson from "./ElecToken.json";
-import { Contract } from 'hardhat/internal/hardhat-network/stack-traces/model';
 
 function App() {
 
@@ -72,7 +71,7 @@ function App() {
 
     var amount = document.getElementById('allowance_amount').value;
 
-    tokenContract.approve(electionContract.address, amount).then((result) => {
+    tokenContract.approve.populateTransaction(electionContract.address, amount).then((result) => {
       signer.sendTransaction(result)
     });
   }
@@ -81,7 +80,7 @@ function App() {
     var address = document.getElementById('distribute_address').value;
     var amount = document.getElementById('distribute_amount').value;
 
-    electionContract.distributeToken(address, candidate).then((result) => {
+    electionContract.distributeToken.populateTransaction(address, amount).then((result) => {
       signer.sendTransaction(result)
     });
   }
@@ -99,7 +98,7 @@ function App() {
       await contract.waitForDeployment()
       setSmartContract(contract);
 
-      let tokenAddress = await electionContract.getTokenAddress();
+      let tokenAddress = await contract.getTokenAddress();
 
       let tokenContractFactory = new ContractFactory(tokenJson.abi, tokenJson.bytecode);
 
