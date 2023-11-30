@@ -70,7 +70,7 @@ function App() {
 
   function allowance() {
 
-    var amount
+    var amount = document.getElementById('allowance_amount').value;
 
     tokenContract.approve(electionContract.address, amount).then((result) => {
       signer.sendTransaction(result)
@@ -78,8 +78,8 @@ function App() {
   }
 
   function distributeToken() {
-    var address
-    var amount
+    var address = document.getElementById('distribute_address').value;
+    var amount = document.getElementById('distribute_amount').value;
 
     electionContract.distributeToken(address, candidate).then((result) => {
       signer.sendTransaction(result)
@@ -196,6 +196,19 @@ function App() {
         <h3>Some Elections May Have Entrance Fees</h3>
         
         <button onClick={() => run()}>Run in Election</button>
+    </section>
+
+    <section>
+        <h2>Allowance</h2>
+        <input type="text" id="allowance_amount" placeholder="Enter Amount"/>
+        <button onClick={() => allowance()}>Allowance</button>
+    </section>
+
+    <section>
+        <h2>Distribute Token</h2>
+        <input type="text" id="distribute_address" placeholder = "Enter Address to Distribute"/>
+        <input type="text" id="distribute_amount" placeholder = "Enter Amount to Distribute"/>
+        <button onClick={() => distributeToken()}>Distribute</button>
     </section>
 
     <section>
