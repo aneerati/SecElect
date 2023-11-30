@@ -98,6 +98,8 @@ function App() {
       await contract.waitForDeployment()
       setSmartContract(contract);
 
+      console.log(contract.target)
+
       let tokenAddress = await contract.getTokenAddress();
 
       let tokenContractFactory = new ContractFactory(tokenJson.abi, tokenJson.bytecode);
@@ -109,7 +111,7 @@ function App() {
       setEntranceFee(fee);
 
       console.log(contract.target);
-      console.log(contract.deployTransaction);
+      //console.log(contract.deployTransaction);
     //} catch {
 
     //}
