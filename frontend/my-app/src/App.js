@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import { ContractFactory } from 'ethers';
 
 function App() {
 
@@ -42,11 +43,20 @@ function App() {
       });
   }
 
-  const deploy = () => {
+  async function StartElection() {
+    const factory = new ContractFactory(contractAbi, contractByteCode);
+    const contract = await factory.deploy(address, endingTime, fee, candidatesNum);
+    
+    await contract.waitForDeployment()
+    setSmartContract(contract);
 
-    //await contract.waitForDeployment()
-    let smartContract = contractFactory.attach(SEPOLIA_SMART_CONTRACT_ADDR);
-    setSmartContract(smartContract);
+    console.log(contract.address);
+    console.log(contract.deployTransaction);
+  }
+
+    
+  const deploy = () => {
+    StartElection();
   }
 
   return (
